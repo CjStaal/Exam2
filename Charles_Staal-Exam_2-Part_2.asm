@@ -29,7 +29,7 @@ sectionB:	.word  74, 59, 49, 88, 92, 76, 88, 72, 90,  50, 82, 0
 main:
 	print_ready_string("Name: Charles Staal\n\n")
 	print_ready_string("\t\tNo. of Student\tFail\tPass\tAverage\n")
-	print_ready_string("-----------------------------------------------------------------------------------------------------------\n")
+	print_ready_string("--------------------------------------------------------------\n")
 	print_ready_string("Section A\t\t")
 	la $a0, sectionA
 	jal Get_Results
@@ -89,6 +89,7 @@ Get_Results:
 
 	end_results:
 	jr $ra
+
 Get_Average:
 # a0 = address of section
 # s0 = address of section
@@ -105,12 +106,14 @@ Get_Average:
 		beqz $t1, end_average
 		addi $s2, $s2, 1
 		add $s1, $t1, $s1
+		addi $s0, $s0, 4
 		b loop2
 		
 	end_average:
 	divu $t0, $s1, $s2
 	move $v0, $t0
 	jr $ra
+	
 exit:
 	li	$v0,10
 	syscall
